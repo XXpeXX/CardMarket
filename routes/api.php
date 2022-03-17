@@ -14,6 +14,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Permisos de user
+Route::prefix('/user')->group(function() {
+
+    Route::put('/register', [UsersController::class, 'register']);
+    Route::put('/login', [UsersController::class, 'login']);
+    Route::put('/recoveryPassword', [UsersController::class, 'recoveryPassword']);
+
+    Route::get('/searchToBuy', [CardsAndCollectionsController::class, 'searchToBuy']);
+
+
+});
+
+// Permisos de admin
+Route::middleware(['validateToken', 'validateRole'])->group(function () {
+
+    Route::put('/register', [CardsAndCollectionsController::class, 'register']);
+    Route::put('/registerCollection', [CardsAndCollectionsController::class, 'registerCollection']);
+    Route::put('/addCardToCollection', [CardsAndCollectionsController::class, 'addCardToCollection']);
+
+});
+
+// Permisos de profesional
+Route::middleware(['validateToken', 'verifyToSell'])->group(function () {
+
+    Route::put('/cardsToSale', [CardsAndCollectionsController::class, 'cardsToSale']);
+    Route::get('/searchCard', [CardsAndCollectionsController::class, 'searchCard']);
+
 });
