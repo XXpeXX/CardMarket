@@ -13,7 +13,7 @@ class CreateCardCollectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('card__collections', function (Blueprint $table) {
+        Schema::create('card_collections', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });

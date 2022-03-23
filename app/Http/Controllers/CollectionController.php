@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class Collection extends Controller
+class CollectionController extends Controller
 {
     public function create(Request $request) {
         $response = array('error_code' =>400, 'error_msg' => 'Error inserting info');

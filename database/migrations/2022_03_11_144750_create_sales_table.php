@@ -17,6 +17,8 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->integer('amount');
             $table->integer('price');
+            $table->unsignedInteger('card_id');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }

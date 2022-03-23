@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Card;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class Card extends Controller
+class CardController extends Controller
 {
     public function create(Request $request) {
         $response = array('error_code' =>400, 'error_msg' => 'Error inserting info');

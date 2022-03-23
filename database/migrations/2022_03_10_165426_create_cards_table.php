@@ -18,6 +18,8 @@ class CreateCardsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('collection');
+            $table->unsignedInteger('collection_id');
+            $table->foreign('collection_id')->references('id')->on('collections');
             $table->timestamps();
         });
     }
