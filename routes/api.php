@@ -14,31 +14,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Permisos de user
-Route::prefix('/user')->group(function() {
-
-    Route::put('/register', [UsersController::class, 'register']);
-    Route::put('/login', [UsersController::class, 'login']);
-    Route::put('/recoveryPassword', [UsersController::class, 'recoveryPassword']);
-
-    Route::get('/searchToBuy', [CardsAndCollectionsController::class, 'searchToBuy']);
-
-
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
 });
 
-// Permisos de admin
-Route::middleware(['validateToken', 'validateRole'])->group(function () {
-
-    Route::put('/register', [CardsAndCollectionsController::class, 'register']);
-    Route::put('/registerCollection', [CardsAndCollectionsController::class, 'registerCollection']);
-    Route::put('/addCardToCollection', [CardsAndCollectionsController::class, 'addCardToCollection']);
-
+Route::prefix('users')->group(function(){
+    Route::post('/login',[UsersController::class,'login']);
+    Route::put('/register',[UsersController::class, 'register']); 
+    Route::get('/resetPassword',[UsersController::class, 'resetPassword']);
+    Route::get('/searchSales',[CardsController::class,'searchSales']);
 });
 
-// Permisos de profesional
-Route::middleware(['validateToken', 'verifyToSell'])->group(function () {
+Route::middleware(['admin','apitoken'])->prefix('admin')->group(function(){
+    Route::put('/createCard',[CardsController::class,'createCard']);
+    Route::put('/createCollection',[CardsController::class,'createCollection']);
+    Route::put('/linkCardCollection',[CardsController::class, 'linkCardCollection']);
+});
 
-    Route::put('/cardsToSale', [CardsAndCollectionsController::class, 'cardsToSale']);
-    Route::get('/searchCard', [CardsAndCollectionsController::class, 'searchCard']);
-
+Route::middleware(['users','apitoken'])->prefix('users')->group(function(){
+    Route::put('/buyCard',[UsersController::class,'buyCard']);
+    Route::put('/sellCard',[UsersController::class,'sellCard']);
+    Route::get('/searchNames',[CardsController::class,'searchNames']);
 });
