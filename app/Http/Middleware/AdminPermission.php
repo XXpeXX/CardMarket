@@ -16,14 +16,14 @@ class AdminPermission
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->user['position'] == 'administrator' ){
+        if($request->user->position == 'administrator' ){
 
             return $next($request);
         }else{
-            
+
             $response = ['error_msg' => 'You need administrator permissions to perform this action'];
         }
-        
+
         return response()->json($response);
     }
 }
