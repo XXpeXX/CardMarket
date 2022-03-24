@@ -46,20 +46,21 @@ class CardsController extends Controller
 
                 }elseif (isset($tempCard->name) && isset($tempCard->description)) {
 
-                    $newCard = new Card();
-                    $newCard->name = $tempCard->name;
-                    $newCard->description = $tempCard->description;
+                    try {
 
-                        try {
+                        $newCard = new Card();
+                        $newCard->name = $tempCard->name;
+                        $newCard->description = $tempCard->description;
+                        $newCard->save();
+                        
+                        array_push($cardsCollection,$newCard->id);
 
-                            $newCard->save();
-                            array_push($cardsCollection,$newCard->id);
-                            $response =['error_msg' => 'Card saved with id ' .$newCard->id];
+                        $response =['error_msg' => 'Card saved with id ' .$newCard->id];
 
-                        }catch (\Exception $e) {
+                    }catch (\Exception $e) {
 
-                            $response = ['error_code' => 0, 'error_msg' => 'Error: '.$e->getMessage()];
-                        }
+                        $response = ['error_code' => 0, 'error_msg' => 'Error: '.$e->getMessage()];
+                    }
 
                 }else {
 
