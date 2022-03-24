@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class ApiToken
 {
@@ -17,20 +18,20 @@ class ApiToken
     public function handle(Request $request, Closure $next)
     {
         $response = ['error_code'=> 1, 'error_msg'=> ''];
+
         if(isset($request->api_token)){
 
             $apitoken = $request->api_token;
 
             if($user = User::where('api_token',$apitoken)->first()){
 
-                //$user = User::where('api_token',$apitoken)->first();
-                $response = ['error_codde' => 'Valid api token'];
+                $response = ['error_msg' => 'Valid api token'];
                 $request->user = $user;
 
                 return $next($request);
             }else{
 
-                $response = ['error_codde' => 'Invalid api token'];
+                $response = ['error_msg' => 'Invalid api token'];
             }
 
         }else{

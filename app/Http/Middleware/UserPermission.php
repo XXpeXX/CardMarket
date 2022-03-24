@@ -16,7 +16,7 @@ class UserPermission
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->user->roll =='Particular' || $request->user->roll =='Professional' ){
+        if($request->user['position'] == 'particular' || $request->user['position'] == 'professional' || $request->user['position'] == 'administrator' ){
 
             return $next($request);
         }else{

@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Card;
-use App\Models\Buys;
+use App\Models\Sales;
 use App\Models\Collection;
 use App\Models\Card_Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Sales;
+
 
 class CardsController extends Controller
 {
@@ -18,10 +18,10 @@ class CardsController extends Controller
         $response = ['error_code' => 1, 'error_msg' => ''];
     
         $validator = Validator::make(json_decode($req->getContent(), true), [
-            'name' => ['required', 'max:50'],
-            'image' => ['required', 'max:100'],
-            'edition' => ['required', 'date'],
-            'card' => ['required']
+            'name' => 'required', 'max:50',
+            'image' => 'required', 'max:100',
+            'edition' => 'required', 'date',
+            'card' => 'required'
         ]);
     
         if ($validator->fails()) {
@@ -105,9 +105,9 @@ class CardsController extends Controller
         $response = ['error_code' => 1, 'error_msg' => ''];
 
         $validator = Validator::make(json_decode($req->getContent(), true), [
-            'name' => ['required', 'max:50'],
-            'description' => ['required', 'max:400'],
-            'collection' => ['required', 'integer'],
+            'name' => 'required', 'max:50',
+            'description' => 'required', 'max:400',
+            'collection' => 'required', 'integer',
         ]);
 
         if ($validator->fails()) {
@@ -160,8 +160,8 @@ class CardsController extends Controller
         $response = ['error_code' => 1, 'error_msg' => ''];
 
         $validator = Validator::make(json_decode($req->getContent(), true), [
-            'card' => ['required'],
-            'collection' => ['required']
+            'card' => 'required',
+            'collection' => 'required'
         ]);
     
         if ($validator->fails()) {
@@ -175,7 +175,7 @@ class CardsController extends Controller
             try{
 
                 $card = Card::where('id', $data->card)->first();
-                $collection = Collection::where('id', $data->collection)->first();
+                $collection = Collection::where('id', $data->collection)->first();  
 
                 if($card && $collection){
                     $cardCollection = new Card_Collection();

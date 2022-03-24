@@ -16,7 +16,7 @@ class AdminPermission
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->user->roll =='Administrator' ){
+        if($request->user['position'] == 'administrator' ){
 
             return $next($request);
         }else{
