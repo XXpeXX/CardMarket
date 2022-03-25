@@ -30,7 +30,7 @@ class UsersController extends Controller
 
         }else {
 
-            $data = json_decode($req -> getContent()); 
+            $data = json_decode($req->getContent()); 
 
             try {
 
